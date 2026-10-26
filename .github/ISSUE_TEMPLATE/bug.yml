@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in aerix does not work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: version
+    attributes:
+      label: aerix --version
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: caldrix-version
+    attributes:
+      label: caldrix --version
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: members
+    attributes:
+      label: Your pool.members entry, or "none"
+      description: Do not paste session logs; they hold your code and prompts.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: The exact command you ran
+      render: sh
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened, with the full output
+      render: text
+    validations:
+      required: true

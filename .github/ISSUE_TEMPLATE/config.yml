@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/caldrix-ai/aerix/tree/main/docs
+    about: Install, how it works, configuration, tuning and troubleshooting.
+  - name: Security vulnerability
+    url: https://github.com/caldrix-ai/aerix/blob/main/SECURITY.md
+    about: Report privately to jyothsna@caldrix.ai, never in a public issue.
+  - name: Licensing
+    url: https://github.com/caldrix-ai/aerix/blob/main/LICENSE.md
+    about: Deploying Aerix for many users needs a licence -- jyothsna@caldrix.ai.
