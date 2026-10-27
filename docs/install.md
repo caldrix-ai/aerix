@@ -30,7 +30,7 @@ Aerix and `caldrix pool` talk over a socket, and both print the version of that 
 ## Platforms
 
 - Linux x86_64 with glibc 2.38 or newer.
-- macOS 14.0 or newer on Apple silicon, the pool on Metal there with small member windows.
+- macOS 14.0 or newer on Apple silicon, the pool on Metal there.
 
 Every other platform is refused, and so is a Linux host without glibc or with an older one.
 

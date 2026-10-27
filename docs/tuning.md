@@ -16,8 +16,8 @@ A member is a caldrix model reference plus caldrix serving flags, set in `pool.m
 - **`model`**: anything `caldrix run` takes. `caldrix doctor` reports which lanes your machine has;
   `caldrix models supported` lists what caldrix runs. Quantized checkpoints are not supported.
 - **`--backend auto|hip|metal|cpu`**: `auto` takes the first usable lane in the order Metal, HIP,
-  CPU. `caldrix pool` has been run on the CPU lane; on Metal with small member
-  windows. Nothing has been run with the pool on HIP.
+  CPU. `caldrix pool` has been run on the CPU lane and on Metal. Nothing has been run with the pool
+  on HIP.
 - **`--max-context N`** (`--ctx N` is the same): the member's window. caldrix's default is 2048
   tokens, which can be smaller than Aerix's startup context in a repository with long instruction
   files (see the next section for how to read yours). The window must hold the startup context, `max_new_tokens` and the results
