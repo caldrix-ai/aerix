@@ -138,9 +138,19 @@ The installer, `install-aerix.sh`, prints each refusal on one line to stderr and
 
 > `could not read `
 
-**Cause.** No Aerix release is published, the release host could not be reached, a checksum file could not be read, the latest version could not be read, the release has no archive for this platform, or a download failed. Nothing is installed.
+**Cause.** GitHub lists no Aerix release, the release host could not be reached, a checksum file could not be read, the latest version could not be read, the release has no archive for this platform, or a download failed. Nothing is installed.
 
-**Fix.** Try again later, or read the release list on GitHub at `https://github.com/caldrix-ai/aerix/releases`.
+**Fix.** Read the release list on GitHub at `https://github.com/caldrix-ai/aerix/releases`, or run the installer again once the host can be reached.
+
+### A transient error from GitHub
+
+> ` answered HTTP `
+
+> `, an error that is not a missing release; nothing was installed; try again in a few minutes`
+
+**Cause.** GitHub answered the release lookup with a rate limit (`429`) or a server error (`5xx`), or answered an archive download with an error other than `404`. The message names the URL and the status. It does not mean that no release or no archive exists. Nothing is installed.
+
+**Fix.** Wait a few minutes and run the installer again.
 
 ### A checksum that does not match
 

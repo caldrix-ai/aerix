@@ -2,8 +2,6 @@
 
 Aerix is a coding agent for small local models. It works in a repository, reading files, editing them, running commands and handing pieces of the work to subagents. Every generation comes from a local `caldrix pool`; there is no hosted model. It reads the Claude Code configuration you already have and never writes to `~/.claude`.
 
-The first Aerix release is not published yet.
-
 ## Install
 
 ```sh
