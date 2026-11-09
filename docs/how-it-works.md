@@ -38,7 +38,7 @@ machine shares it.
 Aerix speaks `caldrix-protocol` version 2 (length-prefixed CBOR frames, or JSON with `--frames
 json`). The unit is a **context**: a list of segments, each a piece of text with an id, a role
 (rendered through the model's own chat template, so Aerix never writes role markers) and a pinned
-flag. Aerix creates, edits (append, replace, remove), forks and drops contexts, and asks for a
+flag. Aerix creates, edits (append, replace, remove) and drops contexts, and asks for a
 generation on one. The daemon is the only source of token counts: after every change Aerix reads
 each segment's count back, and nothing is estimated on the Aerix side.
 
@@ -57,7 +57,7 @@ once. The daemon reports where a generation resumed as `recomputed_from`. An evi
 a full prefill, never a refusal.
 
 This is why a second request costs less to start: every context starts with the same system and
-instruction segments, so a later request, a fork, a verifier or a new session in the same directory
+instruction segments, so a later request, a subagent, a verifier or a new session in the same directory
 finds that prefix stored. To see it on your machine, read the `segment` events of your root's
 first generation and of a later one in your session log: the first computes the whole prompt, a
 later one resumes near its end. A change to any text near the start (an instruction
@@ -189,16 +189,17 @@ for `min(max_new_tokens, W / 4)` tokens.
 
 An `agent` call runs a **piece**: an implementer, then a verifier, retried on failure.
 
-- **Implementer.** It runs on a fork of the calling agent's shared prefix: the leading system and
-  instruction segments only, so it sees none of its caller's conversation and its brief must say
-  everything it needs. The prefix store resumes those rows. The definition's body
-  (if named) and `brief.md`, filled with the brief and check, are appended. Its tools are the definition's (or all), without `agent` at the depth
+- **Implementer.** Its context is created with the calling agent's shared prefix (the leading system and
+  instruction segments), the definition's body (if named) and `brief.md`, filled with the brief
+  and check, in one request. It sees none of its caller's conversation, so its brief must say
+  everything it needs. The prefix store resumes the prefix rows. Adjacent system segments
+  (and adjacent user segments) render as one message, joined by a blank line. Its tools are the definition's (or all), without `agent` at the depth
   limit. Its id is `<caller>.<call id>`, such as `a1.c3`; retries are `a1.c3.r1`, ....
 - **Verifier.** When the implementer ends `done`, a verifier (`a1.c3.v1`, ...) runs on a fresh
   context (the system segments and `verifier.md` with the brief, check, summary and files) with only
   `read`, `bash`, `grep`, `glob` and `repo_map`, and must answer a verdict. `Verify` fires with it.
   A verifier that ends without a verdict counts as `fail`.
-- **Retries.** A `fail` reruns the implementer on a fresh fork of the caller's shared prefix with the
+- **Retries.** A `fail` reruns the implementer on a fresh context built the same way, with the
   failure reason appended, at most `delegation.retries` times; then the piece fails with
   `verification failed after N attempts`. An implementer that ends other than `done` (failed,
   killed, out of turns) ends the piece at once, without a retry.

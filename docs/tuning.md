@@ -110,7 +110,7 @@ system segment differs per project, so two projects share at most the text befor
 
 ## Delegation
 
-- Each piece is at least two agents: an implementer on a fork of the caller's shared prefix (system
+- Each piece is at least two agents: an implementer on a context created from the caller's shared prefix (system
   and instruction segments, resumed from the prefix store) with its brief, and a
   verifier on a fresh context (its system segments usually resume from the prefix store). A
   `fail` verdict reruns the implementer, up to `delegation.retries` (2) times.
